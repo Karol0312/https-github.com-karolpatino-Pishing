@@ -3,6 +3,7 @@ import azure.functions as func
 import json
 import logging
 from src.container import container
+from src.utils.constantes import cte
 from src.models.email_request import EmailRequest
 
 app = func.FunctionApp()
@@ -14,7 +15,6 @@ async def validate_email(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Email validation request received")
 
     try:
-        # Parse request
         req_body = req.get_json()
 
         email = EmailRequest(**req_body)
@@ -23,10 +23,17 @@ async def validate_email(req: func.HttpRequest) -> func.HttpResponse:
         result = await container.get("email_validator").validate_email(email)
 
         # Save to database
-        await container.get("repository").save_validation_result(result)
+        saved = await container.get("repository").save_validation_result(result)
+
+        result = result.to_dict()
+
+        result["saved"] = "Success" if saved == cte.SUCCESS else "Failure"
+
+        # prueba para azure func
+        data = json.dumps(result)
 
         return func.HttpResponse(
-            json.dumps(result),
+            json.dumps(data),
             status_code=200,
             headers={"Content-Type": "application/json"},
         )
