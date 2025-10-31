@@ -1,0 +1,10 @@
+Analiza el siguiente correo:
+
+---------------------------
+Remitente: {sender}
+Asunto: {subject}
+Contenido: {email_content}
+---------------------------
+
+
+Responde únicamente en formato JSON predefinido
