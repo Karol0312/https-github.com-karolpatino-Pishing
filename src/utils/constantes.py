@@ -9,11 +9,11 @@ class Constants:
         self._DATABASE_NAME = "PisshingDB"
         self._CONTAINER_NAME = "emails"
 
-        self._PROMT = """
-    """
+        self._PROMT = """"""
 
-        self._PROMT_SYSTEM = """
-"""
+        self._PROMT_SYSTEM = """"""
+
+        self._PROMT_TEMPERATURE = 0.1
 
     @property
     def SUCCESS(self):
@@ -43,6 +43,13 @@ class Constants:
         # return self._PROMT_SYSTEM
         # todo prueba dinamica
         with open('PROMT_SYSTEM.TXT', 'r') as f:
+            return f.read()
+
+    @property
+    def PROMT_TEMPERATURE(self):
+        # return self._PROMT_SYSTEM
+        # todo prueba dinamica
+        with open('PROMT_TEMPERATURE.TXT', 'r') as f:
             return f.read()
 
 cte = Constants()

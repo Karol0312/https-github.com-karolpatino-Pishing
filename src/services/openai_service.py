@@ -44,6 +44,8 @@ class OpenAIService(AIServiceInterface):
             sender=email.sender, subject=email.subject, email_content=email.body
         )
 
+        temperature = cte.PROMT_TEMPERATURE
+
         try:
             response = self._client.chat.completions.create(
                 model=self._model,
@@ -51,7 +53,7 @@ class OpenAIService(AIServiceInterface):
                     {"role": "system", "content": cte.PROMT_SYSTEM},
                     {"role": "user", "content": prompt},
                 ],
-                temperature=0.1,
+                temperature=temperature,
             )
 
             return cte.SUCCESS, response.choices[0].message.content
