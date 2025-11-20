@@ -53,7 +53,7 @@ class OpenAIService(AIServiceInterface):
                     {"role": "system", "content": cte.PROMT_SYSTEM},
                     {"role": "user", "content": prompt},
                 ],
-                temperature=temperature,
+                temperature= float (temperature), 
             )
 
             return cte.SUCCESS, response.choices[0].message.content

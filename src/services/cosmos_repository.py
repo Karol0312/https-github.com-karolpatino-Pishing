@@ -6,7 +6,9 @@ from src.utils.constantes import cte
 
 class CosmosRepository(RepositoryInterface):
     def __init__(self, endpoint: str, key: str):
-
+           
+        
+           
         # Crear el cliente Cosmos DB
         self._client = CosmosClient(endpoint, key)
 

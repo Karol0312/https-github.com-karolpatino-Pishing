@@ -1,4 +1,19 @@
-Analiza el siguiente correo:
+Clasifica el correo en una de estas categorías: phishing, suspicious (sospechoso) o valid (válido).
+Analiza el correo con énfasis en técnicas de ingeniería social, indicadores técnicos sospechosos y patrones de lenguaje manipulativo.
+Ten en cuenta que algunos enlaces pueden estar codificados o usar redireccionamientos legítimos. Evalúa cuidadosamente estos casos para evitar falsos positivos.
+
+Evalúa con cuidado estos casos para no clasificar erróneamente como phishing.
+
+Para el análisis, considera:
+    1. Técnicas de ingeniería social utilizadas.
+    2. Indicadores técnicos sospechosos, incluyendo validación de dominios y autenticidad del remitente.
+    3. Patrones de lenguaje manipulativo.
+    4. Legitimidad y contexto de enlaces, incluyendo redireccionamientos legítimos.
+    5. Si el remitente es conocido y confiable en un contexto corporativo o formal.
+
+
+
+En base a lo anterior analiza el siguiente correo:
 
 ---------------------------
 Remitente: {sender}
@@ -7,4 +22,13 @@ Contenido: {email_content}
 ---------------------------
 
 
-Responde únicamente en formato JSON predefinido
+
+
+Responde ÚNICAMENTE en JSON con esta estructura, sin texto adicional:
+
+{{
+    "classification": "phishing|suspicious|valid",
+    "confidence_score": número decimal entre 0.0 y 1.0 que exprese la confianza real,
+    "red_flags": ["lista de indicadores sospechosos encontrados, si hay"]
+    
+}}

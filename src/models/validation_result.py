@@ -19,9 +19,9 @@ class ValidationResult(BaseModel):
     id: uuid.UUID = Field(default_factory=uuid.uuid4)
     classification: ValidationStatus
     confidence_score: float
-    reasoning: str
+    #reasoning: str
     red_flags: list[str]
-    recommendations: list[str]
+    #recommendations: list[str]
     metadata: EmailRequest
     # campo particion
     period: str = Field(default_factory=lambda: datetime.now().strftime("%Y%m"))

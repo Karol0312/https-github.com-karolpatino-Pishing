@@ -24,11 +24,12 @@ async def validate_email(request: Request):
     result = await container.get("email_validator").validate_email(email)
 
     # Save to database
-    saved = await container.get("repository").save_validation_result(result)
+   # saved = await container.get("repository").save_validation_result(result)
+
 
     result = result.to_dict()
 
-    result["saved"] = "Success" if saved == cte.SUCCESS else "Failure"
+   # result["saved"] = "Success" if saved == cte.SUCCESS else "Failure"
 
     # prueba para azure func
     data = json.dumps(result)

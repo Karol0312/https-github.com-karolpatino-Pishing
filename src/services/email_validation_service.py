@@ -25,9 +25,8 @@ class EmailValidationService(EmailValidatorInterface):
                 response = json.loads(text)
                 return ValidationResult(metadata=email, **response)
             except json.decoder.JSONDecodeError as e:
-                print(e)
-                print(text)
-                text = "La respuesta de GenAI no corresponde al formato esperado"
+                text = "La respuesta de GenAI no corresponde al formato esperado: \n" + text
+                
             except Exception as e:
                 print(e)
                 text = str(e)
@@ -35,8 +34,8 @@ class EmailValidationService(EmailValidatorInterface):
         return ValidationResult(
             classification=ValidationStatus.ERROR,
             confidence_score=0,
-            reasoning=f"Error interno {text}",
-            red_flags=[],
-            recommendations=["Revisar manualmente el correo"],
+            #reasoning=f"Error interno {text}",
+            red_flags=[list],
+            #recommendations=["Revisar manualmente el correo"],
             metadata=email
         )
