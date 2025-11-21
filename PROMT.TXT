@@ -24,7 +24,7 @@ Contenido: {email_content}
 
 
 
-Responde ÚNICAMENTE en JSON con esta estructura, sin texto adicional:
+Responde ÚNICAMENTE en lista con esta estructura, sin texto adicional:
 
 {{
     "classification": "phishing|suspicious|valid",
