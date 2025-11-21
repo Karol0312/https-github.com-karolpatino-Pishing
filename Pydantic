@@ -1,0 +1,10 @@
+from pydantic import BaseModel
+from typing import List, Dict
+
+class ValidationResult(BaseModel):
+    classification: str
+    confidence_score: float
+    reasoning: str
+    red_flags: [str]
+    recommendations: [str]
+    metadata: Dict
