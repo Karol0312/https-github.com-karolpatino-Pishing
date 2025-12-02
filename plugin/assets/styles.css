@@ -1,0 +1,7 @@
+
+.banner { padding: 12px; color: #fff; font-weight: bold; border-radius: 6px; margin-bottom: 12px; }
+.banner.hidden { display: none; }
+.banner.green { background: #2e7d32; }
+.banner.red { background: #c62828; }
+.banner.yellow { background: #ef6c00; }
+
