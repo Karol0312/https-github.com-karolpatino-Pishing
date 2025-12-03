@@ -1,8 +1,8 @@
 
-// Usa la API integrada de Azure Static Web Apps (ruta relativa)
-const ENDPOINT = "/api/HttpTrigger"; // asegúrate de tener /api configurado en tu SWA
+// Endpoint relativo para Azure Static Web Apps
+const ENDPOINT = "/api/HttpTrigger";
 
-// Utilidad para loguear en <pre id="debug">
+// Log en <pre id="debug">
 function logDebug(msg) {
   const pre = document.getElementById("debug");
   if (!pre) return;
@@ -10,32 +10,31 @@ function logDebug(msg) {
   pre.textContent += (pre.textContent ? "\n" : "") + text;
 }
 
-// Detecta si estamos dentro de Outlook (Office.js disponible)
+// Detecta si estamos en Outlook
 const isOutlook = !!(window.Office);
 
-// Modo Outlook (real)
 if (isOutlook) {
   Office.onReady(() => {
     const btn = document.getElementById("analyzeBtn");
     if (!btn) {
-      logDebug("❌ No se encontró #analyzeBtn en el DOM.");
+      logDebug("❌ No se encontró el botón.");
       return;
     }
     btn.addEventListener("click", analyzeCurrentMail);
-    logDebug("✅ Office listo. Handler conectado.");
+    logDebug("✅ Complemento listo en Outlook.");
   });
 } else {
-  // Modo demo (fuera de Outlook): útil para probar tu API desde el navegador
+  // Modo demo fuera de Outlook
   window.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("analyzeBtn");
     if (!btn) return;
     btn.addEventListener("click", async () => {
       const payload = {
-        subject: "Oferta urgente de soporte",
-        from: "seguro@micros0ft-support.com",
-        body: "Haz clic AQUÍ para verificar tu cuenta: http://micros0ft-secure-login.com",
+        subject: "Correo sospechoso",
+        from: "phishing@fake.com",
+        body: "Haz clic aquí para verificar tu cuenta: http://fake-login.com",
       };
-      logDebug(["🧪 DEMO: payload a enviar:", payload]);
+      logDebug(["🧪 DEMO: payload:", payload]);
       await callApi(payload);
     });
     logDebug("🧪 Modo demo activo (fuera de Outlook).");
@@ -46,7 +45,7 @@ async function analyzeCurrentMail() {
   try {
     const item = Office?.context?.mailbox?.item;
     if (!item) {
-      showBanner("error", "No hay correo activo (Outlook).");
+      showBanner("error", "No hay correo activo.");
       logDebug("❌ Office.context.mailbox.item no disponible.");
       return;
     }
@@ -105,5 +104,6 @@ function showBanner(status, message) {
   banner.textContent = message;
   banner.classList.remove("hidden");
 }
+
 
 
