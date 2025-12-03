@@ -32,7 +32,7 @@
     </Hosts>
     <Resources>
       <bt:Urls>
-        <bt:Url id="taskpaneUrl" DefaultValue="https://TU-URL-HTTPS/taskpane.html" />
+       <bt:Url id="taskpaneUrl" DefaultValue="https://phishing-plugin.azurestaticapps.net/taskpane.html" />
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="groupLabel" DefaultValue="Detector" />
