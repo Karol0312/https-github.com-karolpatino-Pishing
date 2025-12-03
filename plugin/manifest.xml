@@ -1,44 +1,120 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xsi:type="Mail">
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+  xsi:type="Mail">
+
+  <!-- Identidad básica -->
   <Id>karol-detector</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Karol</ProviderName>
+  <DefaultLocale>es-ES</DefaultLocale>
   <DisplayName DefaultValue="Detector de Phishing" />
   <Description DefaultValue="Analiza correos y muestra alerta." />
-  <Hosts><Host Name="Mailbox" /></Hosts>
-  <Requirements><Sets DefaultMinVersion="1.8"><Set Name="Mailbox" /></Sets></Requirements>
+
+  <!-- Anfitrión -->
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+
+  <!-- Requisitos de API de Outlook -->
+  <Requirements>
+    <Sets DefaultMinVersion="1.8">
+      <Set Name="Mailbox" />
+    </Sets>
+  </Requirements>
+
+  <!-- Permisos: leer el correo actual -->
   <Permissions>ReadItem</Permissions>
-  <Rule xsi:type="RuleCollection" Mode="Or"><Rule xsi:type="ItemIs" ItemType="Message" /></Rule>
-  <VersionOverrides xsi:type="mailappor:VersionOverrides" Version="1.0">
+
+  <!-- Reglas: visible en mensajes -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" />
+  </Rule>
+
+  <!-- (Opcional) Dominios permitidos para cargar contenido/llamar API -->
+  <AppDomains>
+    <!-- Dominio de tu Static Web App -->
+    <AppDomain>https://phishing-plugin.azurestaticapps.net</AppDomain>
+    <!-- Si usas Functions fuera de SWA, agrega aquí tu dominio de API -->
+    <!-- Ejemplo: <AppDomain>https://tu-function-app.azurewebsites.net</AppDomain> -->
+  </AppDomains>
+
+  <!-- VersionOverrides para definir comandos y taskpane -->
+  <VersionOverrides
+    xsi:type="mailappor:VersionOverrides"
+    Version="1.0">
+
     <Hosts>
       <mailappor:Host xsi:type="mailappor:Mailbox">
+        <!-- Escritorio (incluye también Outlook Web) -->
         <mailappor:DesktopFormFactor>
           <mailappor:ExtensionPoint xsi:type="mailappor:MessageReadCommandSurface">
+
             <mailappor:OfficeTab id="TabDefault">
               <mailappor:Group id="msgReadGroup">
                 <mailappor:Label resid="groupLabel" />
                 <mailappor:Control xsi:type="mailappor:Button" id="openTaskpaneButton">
                   <mailappor:Label resid="buttonLabel" />
+                  <mailappor:Icon resid="icon16" size="16" />
+                  <mailappor:Icon resid="icon32" size="32" />
+                  <mailappor:Icon resid="icon80" size="80" />
                   <mailappor:Action xsi:type="mailappor:ShowTaskpane">
                     <mailappor:SourceLocation resid="taskpaneUrl" />
+                    <mailappor:SupportsPinning>true</mailappor:SupportsPinning>
                   </mailappor:Action>
                 </mailappor:Control>
               </mailappor:Group>
             </mailappor:OfficeTab>
+
           </mailappor:ExtensionPoint>
         </mailappor:DesktopFormFactor>
+
+        <!-- (Opcional) MobileFormFactor: si quieres mostrar el botón también en móvil
+        <mailappor:MobileFormFactor>
+          <mailappor:ExtensionPoint xsi:type="mailappor:MessageReadCommandSurface">
+            <mailappor:Group id="msgReadGroupMobile">
+              <mailappor:Label resid="groupLabel" />
+              <mailappor:Control xsi:type="mailappor:Button" id="openTaskpaneButtonMobile">
+                <mailappor:Label resid="buttonLabel" />
+                <mailappor:Action xsi:type="mailappor:ShowTaskpane">
+                  <mailappor:SourceLocation resid="taskpaneUrl" />
+                </mailappor:Action>
+              </mailappor:Control>
+            </mailappor:Group>
+          </mailappor:ExtensionPoint>
+        </mailappor:MobileFormFactor>
+        -->
+
       </mailappor:Host>
     </Hosts>
+
+    <!-- Recursos: URLs y textos -->
     <Resources>
       <bt:Urls>
-       <bt:Url id="taskpaneUrl" DefaultValue="https://phishing-plugin.azurestaticapps.net/taskpane.html" />
+        <!-- URL pública del Taskpane: AJUSTA la ruta si tu HTML está en /plugin/ -->
+        <bt:Url id="taskpaneUrl" DefaultValue="https://phishing-plugin.azurestaticapps.net/plugin/taskpane.html" />
+        <!-- Íconos: ajusta las rutas a tus archivos -->
+        <bt:Url id="icon16" DefaultValue="https://phishing-plugin.azurestaticapps.net/assets/icons/icon-16.png" />
+        <bt:Url id="icon32" DefaultValue="https://phishing-plugin.azurestaticapps.net/assets/icons/icon-32.png" />
+        <bt:Url id="icon80" DefaultValue="https://phishing-plugin.azurestaticapps.net/assets/icons/icon-80.png" />
       </bt:Urls>
+
       <bt:ShortStrings>
         <bt:String id="groupLabel" DefaultValue="Detector" />
         <bt:String id="buttonLabel" DefaultValue="Analizar correo" />
       </bt:ShortStrings>
+
+      <!-- (Opcional) textos largos si los necesitas
+      <bt:LongStrings>
+        <bt:String id="tooltipText" DefaultValue="Analiza el contenido del correo para detectar phishing." />
+      </bt:LongStrings>
+      -->
     </Resources>
   </VersionOverrides>
 </OfficeApp>
+
 
