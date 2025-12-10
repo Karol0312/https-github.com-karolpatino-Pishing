@@ -13,28 +13,10 @@
   <DefaultLocale>es-ES</DefaultLocale>
   <DisplayName DefaultValue="Detector de Phishing" />
   <Description DefaultValue="Analiza correos y muestra alerta." />
-
-  <Hosts>
-    <Host Name="Mailbox" />
-  </Hosts>
-
-  <Requirements>
-    <Sets DefaultMinVersion="1.8">
-      <Set Name="Mailbox" />
-    </Sets>
-  </Requirements>
-
-  <!-- Necesario para gestionar la lista maestra de categorías -->
-  <Permissions>ReadWriteMailbox</Permissions>
-
-  <Rule xsi:type="RuleCollection" Mode="Or">
-    <Rule xsi:type="ItemIs" ItemType="Message" />
-  </Rule>
-
-  <AppDomains>
-    <AppDomain>https://phishing-plugin.azurestaticapps.net</AppDomain>
-  </AppDomains>
-
+  <Hosts><Host Name="Mailbox" /></Hosts>
+  <Requirements><Sets DefaultMinVersion="1.8"><Set Name="Mailbox" /></Sets></Requirements>
+  <Permissions>ReadItem</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or"><Rule xsi:type="ItemIs" ItemType="Message" /></Rule>
   <VersionOverrides xsi:type="mailappor:VersionOverrides" Version="1.0">
     <Hosts>
       <mailappor:Host xsi:type="mailappor:Mailbox">
@@ -68,3 +50,4 @@
     </Resources>
   </VersionOverrides>
 </OfficeApp>
+
