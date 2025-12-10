@@ -1,15 +1,40 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xsi:type="Mail">
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+  xsi:type="Mail">
+
   <Id>karol-detector</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Karol</ProviderName>
+  <DefaultLocale>es-ES</DefaultLocale>
   <DisplayName DefaultValue="Detector de Phishing" />
   <Description DefaultValue="Analiza correos y muestra alerta." />
-  <Hosts><Host Name="Mailbox" /></Hosts>
-  <Requirements><Sets DefaultMinVersion="1.8"><Set Name="Mailbox" /></Sets></Requirements>
-  <Permissions>ReadItem</Permissions>
-  <Rule xsi:type="RuleCollection" Mode="Or"><Rule xsi:type="ItemIs" ItemType="Message" /></Rule>
+
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+
+  <Requirements>
+    <Sets DefaultMinVersion="1.8">
+      <Set Name="Mailbox" />
+    </Sets>
+  </Requirements>
+
+  <!-- Necesario para gestionar la lista maestra de categorías -->
+  <Permissions>ReadWriteMailbox</Permissions>
+
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" />
+  </Rule>
+
+  <AppDomains>
+    <AppDomain>https://phishing-plugin.azurestaticapps.net</AppDomain>
+  </AppDomains>
+
   <VersionOverrides xsi:type="mailappor:VersionOverrides" Version="1.0">
     <Hosts>
       <mailappor:Host xsi:type="mailappor:Mailbox">
@@ -22,6 +47,7 @@
                   <mailappor:Label resid="buttonLabel" />
                   <mailappor:Action xsi:type="mailappor:ShowTaskpane">
                     <mailappor:SourceLocation resid="taskpaneUrl" />
+                    <mailappor:SupportsPinning>true</mailappor:SupportsPinning>
                   </mailappor:Action>
                 </mailappor:Control>
               </mailappor:Group>
@@ -30,9 +56,10 @@
         </mailappor:DesktopFormFactor>
       </mailappor:Host>
     </Hosts>
+
     <Resources>
       <bt:Urls>
-       <bt:Url id="taskpaneUrl" DefaultValue="https://phishing-plugin.azurestaticapps.net/taskpane.html" />
+        <bt:Url id="taskpaneUrl" DefaultValue="https://phishing-plugin.azurestaticapps.net/plugin/taskpane.html" />
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="groupLabel" DefaultValue="Detector" />
@@ -41,4 +68,3 @@
     </Resources>
   </VersionOverrides>
 </OfficeApp>
-
