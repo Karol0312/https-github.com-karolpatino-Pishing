@@ -47,4 +47,8 @@ __pycache__/
 # Azurite artifacts
 __blobstorage__
 __queuestorage__
+<<<<<<< HEAD
 __azurite_db*__.json.env
+=======
+__azurite_db*__.json
+>>>>>>> master
